@@ -5,14 +5,23 @@ En este repositorio se encuentra la funcionalidad corazon de nuestro equipo
 
 1. Importar el repositorio y crear un `venv` en la carpeta raíz del repositorio.
 
-2. Con el `venv` activo, y desde la carpeta raíz del repositorio, instalar las dependencias:
+2. Con el `venv` activo, y desde la carpeta raíz del repositorio, instalar las dependencias utilizando el siguiente comando:
 
    ```
    python -m pip install -r requeriments.txt
    ```
 
-3) Ir al siguiente <a href="https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l">enlace de Onedrive</a> (debe tener una cuenta de microsoft de la UTFSM para hacerlo) y descargar la carpeta `datos`.
+3. Descargar la carpeta `datos` desde [OneDrive](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l). Se necesita una cuenta Microsoft de la UTFSM.
 
-4) Descomprimir la carpeta y llevar esta carpeta al mismo directorio donde esta manage.py (este paso es importante porque se requiere para poder generar la base de datos)
+4. Descomprimirla y dejarla **al mismo nivel que `manage.py`**. tal como se dejara en el ejemplo a continuación:
 
-5) Una vez esta la carpeta `datos` a la altura de manage.py en el terminal (con el venv activo y con django y los otros requisitos instalados) debe ejecuar 3 comandos, primero `python manage.py migrate` luego `python manage.py importar_gtfs` y `python manage.py importar_precios`. Estos comandos permiten tener la base de datos funcional con los recorridos y precios para la ejecución de la funcionalidad corazon.
+<img width="809" height="388" alt="image" src="https://github.com/user-attachments/assets/9b84b3b7-3890-4e87-94d1-078d01b7f38a" />
+
+Este paso es obligatorio ya los comandos del siguiente paso leen los archivos desde esa ubicación.
+
+5) Una vez haya realizado los pasos debe ir a un terminal, activar el VENV y quedar en la carpeta "proyectoinicial" del repositorio (donde se encuentra manage.py) tal como se muestra en la siguiente imagen:
+
+<img width="771" height="66" alt="image" src="https://github.com/user-attachments/assets/b545c826-cc81-45f3-8c0d-5165e2e902dd" />
+
+
+Es importante este paso porque el programa y los comandos a ejecutar dependen de estar ubicados correctamente.
