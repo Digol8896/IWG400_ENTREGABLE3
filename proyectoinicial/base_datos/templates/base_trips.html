@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Inicial | Base de Datos</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'base_inicio' %}">Inicio base de datos</a></li>
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio VGC</a></li>
+        </ul>
+    </nav>
+    <h1 class="titulo">Recorridos</h1>
+    <div class="form">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="trip_id" placeholder="Id del trip">
+            <button type="submit">Filtrar recorridos</button>
+    </div>
+    <div class="base">
+        <table>
+            <tr><th>Trip_id</th><th>Service_id</th><th>Red</th><th>Shape_id</th><th>Sentido</th><th>Destino</th><th>Ruta_id</th></tr>
+            {% for trip in trips %}
+            <tr>
+                <td>{{ trip.trip_id }}</td>
+                <td>{{ trip.service_id }}</td>
+                <td>{{ trip.red }}</td>
+                <td>{{ trip.shape_id }}</td>
+                <td>{{ trip.sentido }}</td>
+                <td>{{ trip.destino }}</td>
+                <td>{{ trip.ruta_id }}</td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No hay trips existentes.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>

@@ -1,0 +1,176 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Nav Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #065de8;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+}
+
+.textoheader {
+    color: white;
+    font-weight: bold;
+}
+
+.navbar img.logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Comenzar aqui */
+
+.mainbody {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    align-items: start;
+}
+
+.formulario,
+.resultados,
+.detalle-recorrido {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 0;
+    margin-left: 60px;
+}
+
+.subtitulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.formulario_textos {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+input[type="password"], select {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+input[type="email"], select {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+input[type="submit"],
+.boton-seleccionar {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    background-color: #065de8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="submit"]:hover,
+.boton-seleccionar:hover {
+    background-color: #065de8;
+}
+
+.login-centrado {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.formulario_login {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    padding: 40px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.mensaje-error {
+    color: #c0392b;
+    background-color: #fdecea;
+    border: 1px solid #c0392b;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+body:has(.login-centrado) {
+    margin: 0;
+    background-image: url('../img/metrol1.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.boton-secundario {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #065de8;
+    border: 2px solid #065de8;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+.boton-secundario:hover {
+    background-color: #e8f0fd;
+}
+
+.texto_centrado {
+    text-align: center;
+    margin: 15px 0 10px;
+}

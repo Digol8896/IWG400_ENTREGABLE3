@@ -1,0 +1,67 @@
+{% extends 'base_generar_rutas.html' %}
+{% block title%}Ruta Generada | VSC{% endblock %}
+
+{% block content %}
+    <div class="mainbody">
+
+        <div class="detalle-recorrido cont-info-ruta contenedor-formulario" id="detalle-planificador">
+            <h2 class="subtitulo">Detalle del recorrido</h2>
+
+            <div class="detalle-resumen">
+                <span class="recorrido-hora">{{ salida }} - {{ llegada }}</span>
+                <span class="recorrido-derecha">
+                    <span class="recorrido-duracion">{{ duracion }}</span>
+                    <span class="recorrido-precio">{{ precio }}</span>
+                </span>
+            </div>
+
+            <div class="detalle-ruta">
+                <div class="ruta-punto">
+                    <span class="ruta-marca"></span>
+                    <div>
+                        <small>Origen</small>
+                        <strong>{{ nombre_origen }}</strong>
+                    </div>
+                </div>
+                <div class="ruta-punto">
+                    <span class="ruta-marca"></span>
+                    <div>
+                        <small>Destino</small>
+                        <strong>{{ nombre_destino }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detalle-paso">
+                <span class="chip caminar">Caminar</span>
+                <p>Camina {{ min_origen }} min hasta {{ segmentos.0.subida }}</p>
+            </div>
+
+            {% for s in segmentos %}
+                {% if not forloop.first %}
+                <div class="detalle-paso">
+                    <span class="chip caminar">Transbordo</span>
+                    <p>Camina {{ s.min_antes }} min hasta {{ s.subida }}</p>
+                </div>
+                {% endif %}
+                <div class="detalle-paso">
+                    <span class="chip bus">{{ s.nombre_ruta }}</span>
+                    <p>Sale a las {{ s.hora_subida }} desde {{ s.subida }}</p>
+                    <p>Llega a las {{ s.hora_bajada }} a {{ s.bajada }} · {{ s.paradas }} paradas</p>
+                </div>
+            {% endfor %}
+
+           
+            <div class="detalle-paso">
+                <span class="chip caminar">Caminar</span>
+                <p>Camina {{ min_destino }} min hasta el destino</p>
+            </div>
+
+            
+            <a class="boton-seleccionar" href="{% url 'generar_rutas_formulario' %}">Volver a buscar</a>
+        </div>
+
+       
+        <div class="mapa" id="mapa"></div>
+    </div>
+{% endblock %}

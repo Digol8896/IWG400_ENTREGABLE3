@@ -1,0 +1,163 @@
+{% extends 'base_manage.html' %}
+{% load l10n %}
+
+{% block title %}Precios | VGC{% endblock %}
+
+{% block content %}
+<div class="panel-precios">
+    <h1 class="subtitulo">Administración de precios</h1>
+
+    {% if messages %}
+        {% for mensaje in messages %}
+            <p class="mensaje-error">{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if not perms.tuapp.view_precios_dtpm and not perms.tuapp.view_precios_dtpr and not perms.tuapp.view_precios_mtr %}
+        <p class="mensaje-error">No tienes permisos para ver esta sección.</p>
+    {% else %}
+
+    <!-- ===== Botones para elegir tabla ===== -->
+    <div class="selector-tablas">
+        {% if perms.tuapp.view_precios_dtpm %}
+            <a class="btn-tabla {% if tabla == 'dtpm' %}activo{% endif %}" href="?tabla=dtpm">DTPM</a>
+        {% endif %}
+        {% if perms.tuapp.view_precios_dtpr %}
+            <a class="btn-tabla {% if tabla == 'dtpr' %}activo{% endif %}" href="?tabla=dtpr">DTPR</a>
+        {% endif %}
+        {% if perms.tuapp.view_precios_mtr %}
+            <a class="btn-tabla {% if tabla == 'mtr' %}activo{% endif %}" href="?tabla=mtr">MTR</a>
+        {% endif %}
+    </div>
+
+    {% if tabla %}
+    <form class="buscador" method="GET" action="">
+        <input type="hidden" name="tabla" value="{{ tabla }}">
+        <input type="text" name="buscar" value="{{ buscar }}" placeholder="Buscar por nombre o código...">
+        <button type="submit">Buscar</button>
+    </form>
+    {% endif %}
+    {% if buscar %}
+        <p>{{ total }} resultado{{ total|pluralize }} para "{{ buscar }}"</p>
+    {% endif %}
+
+    <!-- ===== DTPM ===== -->
+    {% if tabla == 'dtpm' and perms.tuapp.view_precios_dtpm %}
+    <h2>Precios DTPM</h2>
+    <table>
+        <tr>
+            <th>Tipo</th>
+            <th>Regular</th>
+            <th>Estudiante</th>
+            <th>Adulto mayor</th>
+            {% if perms.tuapp.change_precios_dtpm %}
+                <th>Acciones</th>
+            {% endif %}
+        </tr>
+        {% for fila in dtpm %}
+        <tr>
+            <td>{{ fila.pk }}</td>
+            {% if perms.tuapp.change_precios_dtpm %}
+                <td><input type="number" step="0.01" name="regular" value="{{ fila.regular|unlocalize }}" form="form-dtpm-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="estudiante" value="{{ fila.estudiante|unlocalize }}" form="form-dtpm-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="adulto_mayor" value="{{ fila.adulto_mayor|unlocalize }}" form="form-dtpm-{{ forloop.counter }}"></td>
+                <td>
+                    <form id="form-dtpm-{{ forloop.counter }}" method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="tabla" value="dtpm">
+                        <input type="hidden" name="pk" value="{{ fila.pk }}">
+                        <button type="submit">Guardar</button>
+                    </form>
+                </td>
+            {% else %}
+                <td>{{ fila.regular }}</td>
+                <td>{{ fila.estudiante }}</td>
+                <td>{{ fila.adulto_mayor }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- ===== DTPR ===== -->
+    {% if tabla == 'dtpr' and perms.tuapp.view_precios_dtpr %}
+    <h2>Precios DTPR</h2>
+    <table>
+        <tr>
+            <th>Código recorrido</th>
+            <th>Regular</th>
+            <th>Estudiante</th>
+            <th>Adulto mayor</th>
+            {% if perms.tuapp.change_precios_dtpr %}
+                <th>Acciones</th>
+            {% endif %}
+        </tr>
+        {% for fila in dtpr %}
+        <tr>
+            <td>{{ fila.pk }}</td>
+            {% if perms.tuapp.change_precios_dtpr %}
+                <td><input type="number" step="0.01" name="regular" value="{{ fila.regular|unlocalize }}" form="form-dtpr-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="estudiante" value="{{ fila.estudiante|unlocalize }}" form="form-dtpr-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="adulto_mayor" value="{{ fila.adulto_mayor|unlocalize }}" form="form-dtpr-{{ forloop.counter }}"></td>
+                <td>
+                    <form id="form-dtpr-{{ forloop.counter }}" method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="tabla" value="dtpr">
+                        <input type="hidden" name="pk" value="{{ fila.pk }}">
+                        <button type="submit">Guardar</button>
+                    </form>
+                </td>
+            {% else %}
+                <td>{{ fila.regular }}</td>
+                <td>{{ fila.estudiante }}</td>
+                <td>{{ fila.adulto_mayor }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!-- ===== MTR ===== -->
+    {% if tabla == 'mtr' and perms.tuapp.view_precios_mtr %}
+    <h2>Precios MTR</h2>
+    <table>
+        <tr>
+            <th>Tipo</th>
+            <th>Regular</th>
+            <th>Estudiante</th>
+            <th>Adulto mayor</th>
+            <th>Discapacidad</th>
+            {% if perms.tuapp.change_precios_mtr %}
+                <th>Acciones</th>
+            {% endif %}
+        </tr>
+        {% for fila in mtr %}
+        <tr>
+            <td>{{ fila.pk }}</td>
+            {% if perms.tuapp.change_precios_mtr %}
+                <td><input type="number" step="0.01" name="regular" value="{{ fila.regular|unlocalize }}" form="form-mtr-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="estudiante" value="{{ fila.estudiante|unlocalize }}" form="form-mtr-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="adulto_mayor" value="{{ fila.adulto_mayor|unlocalize }}" form="form-mtr-{{ forloop.counter }}"></td>
+                <td><input type="number" step="0.01" name="discapacidad" value="{{ fila.discapacidad|unlocalize }}" form="form-mtr-{{ forloop.counter }}"></td>
+                <td>
+                    <form id="form-mtr-{{ forloop.counter }}" method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="tabla" value="mtr">
+                        <input type="hidden" name="pk" value="{{ fila.pk }}">
+                        <button type="submit">Guardar</button>
+                    </form>
+                </td>
+            {% else %}
+                <td>{{ fila.regular }}</td>
+                <td>{{ fila.estudiante }}</td>
+                <td>{{ fila.adulto_mayor }}</td>
+                <td>{{ fila.discapacidad }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% endif %}
+</div>
+{% endblock %}

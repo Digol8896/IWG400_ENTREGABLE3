@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio-busqueda.css' %}">
+    <title>Buscador de recorridos</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio</a></li>
+            <li><a class="textoheader" href="#">Recorridos</a></li>
+            <li><a class="textoheader" href="#">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    
+<div class="mainbody">
+    <h1 class="titulo"> Buscador de recorridos</h1>
+
+    <form method="GET" class="form_busqueda">
+        <input
+        class="input_busqueda"
+        type="text"
+        name="busqueda"
+        placeholder="Ingresa el código o nombre del recorrido"
+        value="{{ busqueda }}"
+        >
+        <button class="boton_buscar" type="submit">Buscar</button>
+    </form>
+
+    <h2 class="subtitulo">Resultados</h2>
+
+    {% for ruta in rutas %}
+        <p class="resultados">
+            <a href="{% url 'recorrido' ruta.codigo %}"> 
+                Código: {{ ruta.codigo }} | 
+                Nombre: {{ ruta.nombre }}
+            </a>
+            
+        </p>
+    {% empty %}
+        <p class="resultados">No se encontraron recorridos</p>
+    {% endfor %}
+</div>
+</body>
+</html>

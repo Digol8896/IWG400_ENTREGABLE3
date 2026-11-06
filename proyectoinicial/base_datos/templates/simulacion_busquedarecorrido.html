@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Proyecto Inicial | Base de Datos</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'base_inicio' %}">Inicio base de datos</a></li>
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio VGC</a></li>
+        </ul>
+    </nav>
+    <h1 class="titulo">Base de datos de Recorridos con mapa</h1>
+    <div class="form">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="codigo" placeholder="Codigo del recorrido">
+            <button type="submit">Buscar recorrido</button>
+        </form>
+    </div>
+    {{ mapa|json_script:"datos-mapa" }}
+    <div id="mapa" class="mapa-contenedor"></div>
+    <table>
+        <tr><th>Codigo</th><th>Route_id</th><th>Nombre</th><th>Color</th><th>Agencia</th><th>Tipo</th></tr>
+        {% for ruta in rutas %}
+        <tr>
+            <td>{{ ruta.codigo }}</td>
+            <td>{{ ruta.route_id }}</td>
+            <td>{{ ruta.nombre }}</td>
+            <td>{{ ruta.color }}</td>
+            <td>{{ ruta.agencia }}</td>
+            <td>{{ ruta.tipo }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No hay recorridos disponibles.</td>
+        </tr>
+        {% endfor %}
+        </table>
+</body>
+<script>
+    const datos = JSON.parse(document.getElementById("datos-mapa").textContent);
+    const mapa = L.map("mapa").setView(datos.centro, datos.zoom);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+    }).addTo(mapa);
+    for (const linea of datos.lineas) {
+    L.polyline(linea.puntos, {color: "#" + linea.color, weight: 4}).addTo(mapa);
+    }
+    for (const m of datos.marcadores) {
+    const globo = document.createElement("div");
+    globo.textContent = m.texto; // se muestra tal cual, no como HTML
+    L.marker([m.lat, m.lon]).addTo(mapa).bindPopup(globo);
+    }
+</script>

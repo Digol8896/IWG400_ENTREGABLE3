@@ -1,0 +1,21 @@
+.formulario_registro {
+    max-width: 520px;
+    padding: 30px;
+}
+
+.formulario_registro input[type="text"],
+.formulario_registro input[type="email"],
+.formulario_registro input[type="password"] {
+    padding: 10px 12px;
+    margin-bottom: 12px;
+}
+
+.fila_doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.formulario_registro {
+    max-width: 520px;
+}

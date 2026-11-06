@@ -1,0 +1,10 @@
+{% extends 'base_manage.html' %}
+
+{% block title %}Home Administración | VGC{% endblock %}
+
+{% block content %}
+<div class="mainbody">
+    <h1>Bienvenido {{user.first_name}}</h1>
+    <a href="{% url 'manage_precios' %}">Administracion de precios</a>
+</div>
+{% endblock %}

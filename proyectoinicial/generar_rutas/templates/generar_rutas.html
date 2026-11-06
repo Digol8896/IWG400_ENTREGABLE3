@@ -1,0 +1,51 @@
+{% extends 'base_generar_rutas.html' %}
+
+{% block title %}Generar rutas | VSC{% endblock %}
+
+{% block content %}
+    <div class="mainbody" >
+        <div class="formulario  form-gr cont-info-ruta" id="form-planificador">
+            <div class="contenedor-formulario">
+                <h2 class="subtitulo">Busqueda de recorridos</h2>
+                <form method="POST" action="{% url 'confirmar_lugares' %}">
+                    {% csrf_token %}
+                    <!-- Origen -->
+                        <div class="input-ruta">
+                            <label class="formulario_textos" for="origen">Origen</label>
+                            <input type="text" id="origen" name="origen" required class="input-text input-general">
+                        </div>
+                    <!-- Destino -->
+                        <div class="input-ruta">
+                        <label class="formulario_textos"for="destino">Destino:</label>
+                        <input type="text" id="destino" name="destino" required class="input-text input-general">
+                        </div>
+                    <!-- Fecha de salida -->
+                    <div class="input-ruta">
+                        <label class="formulario_textos" for="fecha_viaje">Fecha de salida:</label>
+                        <input type="date" id="fecha_viaje" name="fecha_viaje" value="{{ fecha_hoy }}" class="input-general">
+                    </div>
+                    <!-- Hora de salida -->
+                    <div class="input-ruta">
+                        <label class="formulario_textos" for="hora_viaje">Hora de salida:</label>
+                        <input type="time" id="hora_viaje" name="hora_viaje" value="{{ hora_ahora }}" class="input-general">
+                    </div>
+                    <!-- Selección de tipo de usuario -->
+                    <div class="input-ruta">
+                        <label class="formulario_textos" for="tipo_usuario">Tipo de usuario:</label>
+                        <select id="tipo_usuario" name="tipo_usuario" required class="input-general">
+                            <option value="regular">Regular</option>
+                            <option value="estudiante">Estudiante</option>
+                            <option value="adulto_mayor">Adulto mayor</option>
+                        </select>
+                    </div>
+                    <!-- Boton de enviar -->
+                    <input type="submit" class="boton-seleccionar" value="Buscar">
+                    
+                    
+                </form> 
+            </div>
+        </div>
+        <!-- Mapa, para cambiar cosas como su tamañao o borde modificar .mapa en el css -->
+        <div class="mapa" id="mapa"></div>
+    </div>
+{% endblock %}

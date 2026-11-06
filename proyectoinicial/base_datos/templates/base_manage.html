@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Proyecto Inicial | Base de Datos{% endblock %}</title>
+    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'home_manage' %}">Inicio</a></li>
+            <li><a class="textoheader" href="{% url 'logout_bd' %}">Cerrar sesión</a></li>
+            <li><a class="textoheader">{{ user.username }}</a></li>
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+    {% block script %}{% endblock %}
+</body>
+</html>

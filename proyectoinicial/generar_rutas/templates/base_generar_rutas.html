@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- Ruta del css-->
+    <link rel="stylesheet" href="{% static 'css/generar_rutas.css' %}">
+    <!-- Este bloque permite agregar los heads propios de los HTML que llamen a esta base-->
+    {% block head %}{% endblock %}
+    <!-- Titulo, muestra el que aparece ahi a menos que una de las paginas tenga su propio titulo-->
+    <title>{%block title%}Generar Rutas{% endblock %}</title>
+    {% if mapa %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    {% endif %}
+</head>
+<body>
+    <!-- Nav Bar de toda la funcion generar rutas-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio</a></li>
+            <li><a class="textoheader" href="#">Recorridos</a></li>
+            <li><a class="textoheader" href="{% url 'generar_rutas_formulario' %}">Rutas</a></li>
+            <li><a class="textoheader" href="#">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    <!-- No tocar ya que lo siguiente trae el contenido de las paginas siguientes-->
+    {% block content %}
+    {% endblock %}
+    <!--- Muestra el mapa en caso de que haya uno en el views.py -->
+    {% if mapa %}
+    {{ mapa|json_script:"datos-mapa" }}
+    <!-- Scripts del mapa -->
+    <script>
+    const datos = JSON.parse(document.getElementById("datos-mapa").textContent);
+    const mapa = L.map("mapa").setView(datos.centro, datos.zoom);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+    }).addTo(mapa);
+
+    for (const linea of datos.lineas) {
+        L.polyline(linea.puntos, {color: "#" + linea.color, weight: 4}).addTo(mapa);
+    }
+    for (const m of datos.marcadores) {
+        const globo = document.createElement("div");
+        globo.textContent = m.texto;
+        L.marker([m.lat, m.lon]).addTo(mapa).bindPopup(globo);
+    }
+    </script>
+    {% endif %}
+    <!--Agrega scripts en caso de que uno de los .html use un Script propio-->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

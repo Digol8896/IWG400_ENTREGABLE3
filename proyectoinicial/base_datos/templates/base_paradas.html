@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Inicial | Base de Datos</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'base_inicio' %}">Inicio base de datos</a></li>
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio VGC</a></li>
+        </ul>
+    </nav>
+    <h1 class="titulo">Paradas</h1>
+    <div class="base">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="nombre" placeholder="Nombre de la parada">
+            <button type="submit">Filtras paradas</button>
+        </form>
+        <table>
+            <tr><th>Stop_id</th><th>Codigo</th><th>Nombre</th><th>Latitud</th><th>Longitud</th><th>Red</th></tr>
+            {% for parada in paradas %}
+            <tr>
+                <td>{{ parada.stop_id }}</td>
+                <td>{{ parada.codigo }}</td>
+                <td>{{ parada.nombre }}</td>
+                <td>{{ parada.lat }}</td>
+                <td>{{ parada.lon }}</td>
+                <td>{{ parada.red }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No hay paradas con ese lugar.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

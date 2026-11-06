@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/busqueda-recorrido.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <title>Información del recorrido</title>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio</a></li>
+            <li><a class="textoheader" href="#">Recorridos</a></li>
+            <li><a class="textoheader" href="#">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    <div class="mainbody">
+        <h1 class="titulo">Información del recorrido</h1>
+
+        <p class="info">Código: {{ ruta.codigo }}</p>
+        <p class="info">Nombre: {{ ruta.nombre }}</p>
+
+        
+        <details class="desplegable">
+            <summary class="nombre_desplegable">Precios</summary>
+            {% if precios_recorrido %}
+
+                {% if tipo_precios == "metro" and precios_recorrido|length > 1 %}
+
+                    <table class="tabla_precios">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                {% for precio in precios_recorrido %}
+                                    <th>
+                                        {% if precio.tipo == "metro_baja" %}
+                                            Baja
+                                        {% elif precio.tipo == "metro_valle" %}
+                                            Valle
+                                        {% elif precio.tipo == "metro_punta" %}
+                                            Punta
+                                        {% endif %}
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th>Regular</th>
+                                {% for precio in precios_recorrido %}
+                                    <td>${{ precio.regular }}</td>
+                                {% endfor %}
+                            </tr>
+
+                            <tr>
+                                <th>Estudiante</th>
+                                {% for precio in precios_recorrido %}
+                                    <td>${{ precio.estudiante }}</td>
+                                {% endfor %}
+                            </tr>
+                            
+                            <tr>
+                                <th>Adulto mayor</th>
+                                {% for precio in precios_recorrido %}
+                                    <td>${{ precio.adulto_mayor }}</td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                {% elif tipo_precios == "mt" %}
+                    <table class="tabla_precios">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Tipo</th>
+                                <th>1-1</th>
+                                <th>1-2</th>
+                                <th>1-3</th>
+                                <th>2-2</th>
+                                <th>2-3</th>
+                                <th>3-3</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" colspan">Normal</th>
+                                <th>Bajo</th>
+                                {% for precio in precios_recorrido %}
+                                    {% if precio.tipo|slice:"4:" == "baja" %}
+                                        <td>${{ precio.regular }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            <tr>
+                                <th>Alto</th>
+                                {% for precio in precios_recorrido %}
+                                    {% if precio.tipo|slice:"4:" == "alta" %}
+                                        <td>${{ precio.regular }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            <tr>
+                                <th colspan="2">Estudiante</th>
+                                {% for precio in precios_recorrido %}
+                                    {% if precio.tipo|slice:"4:" == "baja" %}
+                                        <td>${{ precio.estudiante }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            
+                            <tr>
+                                <th colspan="2">Adulto mayor</th>
+                                {% for precio in precios_recorrido %}
+                                    {% if precio.tipo|slice:"4:" == "baja" %}
+                                        <td>${{ precio.adulto_mayor }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            <tr>
+                                <th colspan="2">Discapacidad</th>
+                                {% for precio in precios_recorrido %}
+                                    {% if precio.tipo|slice:"4:" == "baja" %}
+                                        <td>${{ precio.discapacidad }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    {% for precio in precios_recorrido %}
+                        
+
+                        <table class="tabla_precios">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th>Regular</th>
+                                    <td>${{ precio.regular }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Estudiante</th>
+                                    <td>${{ precio.estudiante }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Adulto mayor</th>
+                                    <td>${{ precio.adulto_mayor }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    {% endfor %}
+                {% endif %}
+
+            {% else %}
+                <p class="info">No hay precios disponibles para este recorrido.</p>
+            {% endif %}
+        </details>
+
+        <details class="desplegable">
+            <summary class="nombre_desplegable">Días de funcionamiento</summary>
+            <p class="info">{{ dias_funcionamiento }}</p>
+        </details>
+        
+        <details class="desplegable">
+            <summary class="nombre_desplegable">Horarios de salida</summary>
+
+            
+            <p class="info">
+            Desde {{ horarios.0.hora }} hasta {{ horarios.1.hora }}
+            </p>
+
+        </details>
+
+
+        <details class="desplegable">
+            <summary class="nombre_desplegable">Paradas del recorrido</summary>
+                {% for grupo_paradas in paradas_por_sentido %}
+
+                    <details class="desplegable">
+                        <summary class="nombre_desplegable">Dirección: {{ grupo_paradas.destino }}</summary>
+
+                            {% for parada in grupo_paradas.paradas %}
+                                <p class="info">
+                                    {{ parada.secuencia }}. {{ parada.parada.nombre }}
+                                    {% if ruta.codigo == "MTR" %}
+                                        {% if parada.parada.nombre in tramo_1 %}
+                                            (Tramo 1)
+                                        {% elif parada.parada.nombre in tramo_2 %}
+                                            (Tramo 2)
+                                        {% elif parada.parada.nombre in tramo_3 %}
+                                            (Tramo 3)
+                                        {% endif %}
+                                    {% endif %}
+                                </p>
+
+                            {% empty %}
+                                <p class="info">No hay paradas disponibles.</p>
+                            {% endfor %}
+
+                    </details>
+
+                {% empty %}
+                    <p class="info">No hay paradas disponibles.</p>
+                {% endfor %}
+
+
+                
+        </details>
+        <a class="volver_buscador" href="{% url 'busqueda' %}">Volver al buscador</a>
+        {{ mapa|json_script:"datos-mapa" }}
+        <div id="mapa" class="mapa"></div>
+
+    </div>
+</body>
+
+<script>
+    const datos = JSON.parse(document.getElementById("datos-mapa").textContent);
+    const mapa = L.map("mapa").setView(datos.centro, datos.zoom);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+    }).addTo(mapa);
+
+    for (const linea of datos.lineas) {
+        L.polyline(linea.puntos, {color: "#" + linea.color, weight: 4}).addTo(mapa);
+    }
+    for (const m of datos.marcadores) {
+        const globo = document.createElement("div");
+        globo.textContent = m.texto;
+        L.marker([m.lat, m.lon]).addTo(mapa).bindPopup(globo);
+    }
+</script>
+</html>

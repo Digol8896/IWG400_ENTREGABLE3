@@ -1,0 +1,71 @@
+{% extends 'base_generar_rutas.html' %}
+
+{% block title%}Confirmar origen y destino | VSC{% endblock %}
+
+{% block content %}
+    <!-- Contenedor de toda la pagina -->
+    <div class="mainbody">
+        {% if error %}
+            <!-- Mensaje de error: aparece solo si no se encontraron lugares -->
+            <p>{{ error }}</p>
+            <!-- Enlace para volver al formulario de busqueda -->
+            <a href="{% url 'generar_rutas_formulario' %}">Volver</a>
+        {% else %}
+        <!-- Formulario para confirmar origen y destino -->
+        <form method="post" action="{% url 'generar_ruta_recorridos' %}" class="form-scroll cont-info-ruta info-generada">
+            {% csrf_token %}
+
+            <!-- Titulo de la lista de origenes -->
+            <h2>Origen</h2>
+            <!-- Lista de lugares posibles para el origen -->
+            <div class="lista-lugares">
+                {% for o in origenes %}
+                    <!-- Tarjeta de un lugar de origen (se repite por cada lugar encontrado) -->
+                    <label class="tarjeta">
+                        <!-- Boton de seleccion del origen (el primero viene marcado) -->
+                        <input type="radio" name="origen"
+                            value="{{ o.lat }}|{{ o.lon }}|{{ o.nombre }}"
+                            {% if forloop.first %}checked{% endif %}>
+                        <span class="tarjeta-texto">
+                            <!-- Nombre del lugar y su tipo (etiqueta) -->
+                            <span class="tarjeta-titulo">{{ forloop.counter }}. {{ o.nombre }}</span>
+                            <span class="chip">{{ o.tipo }}</span>
+                        </span>
+                    </label>
+                {% endfor %}
+            </div>
+
+            <!-- Titulo de la lista de destinos -->
+            <h2>Destino</h2>
+            <!-- Lista de lugares posibles para el destino -->
+            <div class="lista-lugares">
+                {% for d in destinos %}
+                    <!-- Tarjeta de un lugar de destino (se repite por cada lugar encontrado) -->
+                    <label class="tarjeta">
+                        <!-- Boton de seleccion del destino (el primero viene marcado) -->
+                        <input type="radio" name="destino"
+                            value="{{ d.lat }}|{{ d.lon }}|{{ d.nombre }}"
+                            {% if forloop.first %}checked{% endif %}>
+                        <span class="tarjeta-texto">
+                            <!-- Nombre del lugar y su tipo (etiqueta) -->
+                            <span class="tarjeta-titulo">{{ forloop.counter }}. {{ d.nombre }}</span>
+                            <span class="chip">{{ d.tipo }}</span>
+                        </span>
+                    </label>
+                {% endfor %}
+            </div>
+
+            <!-- Dato oculto: tipo de usuario elegido antes (para calcular el precio) -->
+            <input type="hidden" name="tipo_usuario" value="{{ tipo_usuario }}">
+            <!-- Datos ocultos: fecha y hora de salida elegidas antes (para calcular los horarios) -->
+            <input type="hidden" name="fecha_viaje" value="{{ fecha_viaje }}">
+            <input type="hidden" name="hora_viaje" value="{{ hora_viaje }}">
+            <!-- Boton para confirmar y buscar rutas -->
+            <input type="submit" class="boton-seleccionar" value="Confirmar y buscar">
+        </form>
+        {% endif %}
+        <!-- Mapa, para cambiar cosas como su tamañao o borde modificar .mapa en el css -->
+        <div class="mapa" id="mapa"></div>
+    </div>
+    {% endblock %}
+</html>

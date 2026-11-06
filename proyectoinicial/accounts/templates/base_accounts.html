@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    {% block head %}{% endblock %}
+    <title>{% block title %}Iniciar Sesión{% endblock %}</title> 
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio</a></li>
+            <li><a class="textoheader" href="{% url 'busqueda' %}">Recorridos</a></li>
+            <li><a class="textoheader" href="#">Rutas</a></li>
+            <li><a class="textoheader" href="#">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+    {% block scripts %}{% endblock %}
+</html>

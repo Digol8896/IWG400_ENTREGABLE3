@@ -1,0 +1,41 @@
+{% load static %}
+<!-- Borren este comentario despues de terminal el inicio: Este HTML trae una adpatación del css del modelo de baja fidelidad -->
+<!-- Para modificar interfaz y todo eso para mejorarlo ir a las clases en el CSS -->
+<!-- Este HTML viene semi vacio ya que solo trae la base de css usada para el modelo como referencia para la programación de la interfaz -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Viaja sin cortisol{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+</head>
+<body>
+    <!-- Aqui va la barra de navegación -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="#">Inicio</a></li>
+            <l1><a class="textoheader" href="{% url 'generar_rutas_formulario'%}">Rutas</a></l1>
+            <li><a class="textoheader" href="#">Recorridos</a></li>
+            <li><a class="textoheader" href="#">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    <div class="mainbody">
+        <div></div>
+        <div class="rutas">
+            <div>
+                <h1>Viajar sin cortisol</h1>
+                <p>Esta pagina de inicio es una pagina temporal hecha con el fin de permitir recorrer la pagina hacia la función corazón</p>
+            </div>
+            <div>
+                <a class="boton-seleccionar" href="{% url 'generar_rutas_formulario'%}">Ir a rutas (función corazón)</a>
+            </div>
+        </div>
+        <div></div>
+    </div>
+</body>
+</html>

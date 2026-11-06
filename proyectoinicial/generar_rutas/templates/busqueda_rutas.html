@@ -1,0 +1,114 @@
+{% extends 'base_generar_rutas.html' %}
+{% load l10n %}
+
+{% block title %}Rutas disponibles | VSC{% endblock %}
+
+{% block content %}
+    <!-- Contenedor de toda la pagina (2 columnas: lista de rutas y mapa) -->
+    <div class="mainbody">
+        <!-- Panel con la lista de rutas encontradas -->
+        <div class="formulario form-scroll cont-info-ruta info-generada" id="form-planificador">
+            <h2 class="subtitulo">Rutas encontradas</h2>
+            <!-- Origen y destino buscados -->
+            <p>Origen: {{ nombre_origen }}</p>
+            <p>Destino: {{ nombre_destino }}</p>
+            <!-- Fecha y hora de salida ingresados por el usuario -->
+            <p>Salida: {{ inicio_texto }}</p>
+            <!-- Formulario para elegir una ruta -->
+            <form method="post" action="{% url 'ruta_generada' %}">
+                {% csrf_token %}
+                <!-- No tocar: datos ocultos de origen y destino para enviar al seleccionar la ruta -->
+                <input type="hidden" name="nombre_origen" value="{{ nombre_origen }}">
+                <input type="hidden" name="lat_o" value="{{ lat_o|unlocalize }}">
+                <input type="hidden" name="lon_o" value="{{ lon_o|unlocalize }}">
+                <input type="hidden" name="nombre_destino" value="{{ nombre_destino }}">
+                <input type="hidden" name="lat_d" value="{{ lat_d|unlocalize }}">
+                <input type="hidden" name="lon_d" value="{{ lon_d|unlocalize }}">
+
+                <!-- Se repite una vez por cada ruta encontrada -->
+                {% for op in opciones %}
+                    {% with i=forloop.counter0 %}
+                    <!-- Tarjeta de una ruta -->
+                   <label class="tarjeta">
+      <input type="radio" name="opcion" value="{{ i }}"
+        {% if forloop.first %}checked{% endif %}>
+    <span class="tarjeta-texto">
+          {% if forloop.first %}<span class="etiqueta">Más rápida</span>{% endif %}
+        <!-- Duración grande -->
+        <span class="tarjeta-duracion">{{ op.duracion }}</span>
+        <!-- Horario y precio, más chico -->
+        <span class="tarjeta-titulo">
+            {{ op.salida }} → {{ op.llegada }} · {{ op.precio }}
+        </span>
+        <span>
+            {% for t in op.tramos %}
+                {% if t == "Caminar" %}
+                    <span class="chip caminar"> {{ t }}</span>
+                {% else %}
+                    <span class="chip bus"> {{ t }}</span>
+                {% endif %}{% if not forloop.last %} &gt; {% endif %}
+            {% endfor %}
+        </span>
+    </span>
+</label>
+
+                    <!-- Datos ocultos de esta ruta (no se ven; el script del final los activa solo para la ruta marcada) -->
+                    <fieldset disabled class="datos-tarjeta" id="datos_{{ i }}" style="border:0;padding:0;margin:0;">
+                        <input type="hidden" name="cantidad" value="{{ op.segmentos|length }}">
+                        <input type="hidden" name="precio" value="{{ op.precio }}">
+                        <input type="hidden" name="salida" value="{{ op.salida }}">
+                        <input type="hidden" name="llegada" value="{{ op.llegada }}">
+                        <input type="hidden" name="duracion" value="{{ op.duracion }}">
+                        <input type="hidden" name="caminar_origen" value="{{ op.caminar_origen|unlocalize }}">
+                        <input type="hidden" name="caminar_destino" value="{{ op.caminar_destino|unlocalize }}">
+                        <input type="hidden" name="caminar_transbordo" value="{{ op.caminar_transbordo|unlocalize }}">
+                        {% for s in op.segmentos %}
+                            <input type="hidden" name="ruta_{{ forloop.counter }}" value="{{ s.ruta }}">
+                            <input type="hidden" name="trip_{{ forloop.counter }}" value="{{ s.trip_id }}">
+                            <input type="hidden" name="shape_{{ forloop.counter }}" value="{{ s.shape_id }}">
+                            <input type="hidden" name="desde_{{ forloop.counter }}" value="{{ s.shape_desde }}">
+                            <input type="hidden" name="hasta_{{ forloop.counter }}" value="{{ s.shape_hasta }}">
+                            <input type="hidden" name="stop_subida_{{ forloop.counter }}" value="{{ s.stop_subida }}">
+                            <input type="hidden" name="nombre_subida_{{ forloop.counter }}" value="{{ s.subida }}">
+                            <input type="hidden" name="lat_subida_{{ forloop.counter }}" value="{{ s.lat_subida|unlocalize }}">
+                            <input type="hidden" name="lon_subida_{{ forloop.counter }}" value="{{ s.lon_subida|unlocalize }}">
+                            <input type="hidden" name="stop_bajada_{{ forloop.counter }}" value="{{ s.stop_bajada }}">
+                            <input type="hidden" name="nombre_bajada_{{ forloop.counter }}" value="{{ s.bajada }}">
+                            <input type="hidden" name="lat_bajada_{{ forloop.counter }}" value="{{ s.lat_bajada|unlocalize }}">
+                            <input type="hidden" name="lon_bajada_{{ forloop.counter }}" value="{{ s.lon_bajada|unlocalize }}">
+                            <input type="hidden" name="caminar_antes_{{ forloop.counter }}" value="{{ s.caminar_antes|unlocalize }}">
+                            <input type="hidden" name="hora_subida_{{ forloop.counter }}" value="{{ s.hora_subida }}">
+                            <input type="hidden" name="hora_bajada_{{ forloop.counter }}" value="{{ s.hora_bajada }}">
+                            <input type="hidden" name="paradas_{{ forloop.counter }}" value="{{ s.paradas }}">
+                        {% endfor %}
+                    </fieldset>
+                    {% endwith %}
+                {% endfor %}
+                <!-- Boton de Seleccionar ruta -->
+                <input type="submit" class="boton-seleccionar" value="Seleccionar Ruta">
+            </form>
+
+            <!-- Enlace para volver al formulario de busqueda -->
+            <a href="{% url 'generar_rutas_formulario' %}">Nueva búsqueda</a>
+        </div>
+        <!-- Mapa, para cambiar cosas como su tamañao o borde modificar .mapa en el css -->
+        <div class="mapa" id="mapa"></div>
+    </div>
+    {% endblock %}
+    {% block scripts %}
+    <!-- Script que enviar los datos de la ruta marcada -->
+    <script>
+    function activar() {
+        const todos = document.querySelectorAll(".datos-tarjeta");
+        todos.forEach(function (f) { f.disabled = true; });
+        const marcado = document.querySelector('input[name="opcion"]:checked');
+        if (marcado) {
+            document.getElementById("datos_" + marcado.value).disabled = false;
+        }
+    }
+    document.querySelectorAll('input[name="opcion"]').forEach(function (r) {
+        r.addEventListener("change", activar);
+    });
+    activar();
+    </script>
+    {% endblock %}

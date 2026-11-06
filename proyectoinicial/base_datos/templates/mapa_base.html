@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Proyecto Inicial | Base de Datos</title>
+    <link rel="stylesheet" href="{% static 'css/basemapa.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'base_inicio' %}">Inicio base de datos</a></li>
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio VGC</a></li>
+        </ul>
+    </nav>
+    <div id="mapa" class="mapa" style="height: 500px;"></div>
+</body>
+<script>
+    var mapa = L.map("mapa").setView([-33.45, -70.66], 12);   // [lat, lon] y zoom
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+    }).addTo(mapa);
+    var m = L.marker([-33.45769288422455, -70.66353529644816]).addTo(mapa);
+    m.bindPopup("<b>Universidad de Chile</b><br>Facultad de Ciencias Físicas y Matemáticas").openPopup();
+    var m2 = L.marker([-33.49165435721263, -70.61872986246826]).addTo(mapa);
+    m2.bindPopup("<b>Universidad Técnica Federico Santa María</b><br>Campus Santiago San Joaquín").openPopup();
+
+    const caminar = [
+        [-33.45769288422455, -70.66353529644816],
+        [-33.45779219974234, -70.66395577243946],
+        [-33.458550191703786, -70.66388523424715],
+        [-33.45817707248398, -70.65781469146904],
+        [-33.45818771700986, -70.65785296789463],
+        [-33.45815046116354, -70.65769986219225],
+        [-33.45989412508238, -70.65745703884136],
+        [-33.46046991325955, -70.6572495365206],
+        [-33.460700500022, -70.6568764999963]
+    ]
+    const camina1 = L.polyline(caminar, {color: 'black'}).addTo(mapa);
+    var entradametro= L.marker([-33.460700500022, -70.6568764999963]).addTo(mapa);
+    entradametro.bindPopup("<b>Parque O'Higgins L2</b><br>Toma la L2 hasta Santa Ana");
+
+    const L2 = [
+        [-33.460700500022, -70.6568764999963],
+        [-33.460385, -70.65691],
+        [-33.455841, -70.657177],
+        [-33.454237, -70.658157],
+        [-33.4529, -70.658603],
+        [-33.450138, -70.659583],
+        [-33.447732, -70.660207],
+        [-33.446128, -70.660474],
+        [-33.44399, -70.66083],
+        [-33.441673, -70.660117],
+        [-33.439624, -70.65985],
+        [-33.438109, -70.65985],
+        [-33.4383046807644, -70.6598231684441]
+    ]
+    const linea2 = L.polyline(L2, {color: 'yellow'}).addTo(mapa);
+    var santaanal2 = L.marker([-33.4383046807644, -70.6598231684441]).addTo(mapa);
+    santaanal2.bindPopup("<b>Santa Ana L2</b><br>Combina a la Linea 5");
+    var santanal5 = L.marker([-33.438303314847, -70.6599099214477]).addTo(mapa);
+    santanal5.bindPopup("<b>Santa Ana L5</b><br>Continua dirección Vicente Valdés hasta Camino Agrícola");
+    const L5 = [
+        [-33.438303314847, -70.6599099214477],
+        [-33.436596, -70.644518],
+        [-33.437097, -70.633742],
+        [-33.43891, -70.632589],
+        [-33.442786, -70.63172],
+        [-33.443788, -70.631386],
+        [-33.447063, -70.63045],
+        [-33.449669, -70.629849],
+        [-33.453679, -70.628847],
+        [-33.458691, -70.62751],
+        [-33.467111, -70.625171],
+        [-33.472591, -70.623567],
+        [-33.477469, -70.622298],
+        [-33.479674, -70.621696],
+        [-33.483484, -70.620694],
+        [-33.485555, -70.619624],
+        [-33.487092, -70.618555],
+        [-33.49157, -70.61762],
+        [-33.491921,-70.617491]
+    ]
+    const linea5 = L.polyline(L5, {color: 'green'}).addTo(mapa);
+    var agricola = L.marker([-33.491921,-70.617491]).addTo(mapa);
+    agricola.bindPopup("<b>Camino Agrícola L5</b><br>Camina hasta la UTFSM Campus Santiago San Joaquín");
+</script>

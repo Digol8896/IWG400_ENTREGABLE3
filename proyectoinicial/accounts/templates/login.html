@@ -1,0 +1,34 @@
+{% extends 'base_accounts.html' %}
+
+{% block title %}Inicio de sesión | VGC{% endblock %}
+
+{% block content %}
+<div class="mainbody login-centrado">
+    <div class="formulario_login">
+    <h1>Inicio de sesión</h1>
+    {% if messages %}
+        {% for mensaje in messages %}
+            <p class="mensaje-error">{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div>
+            <label class="formulario_textos" for="nombre_usuario">Usuario:</label>
+            <input type="text"  id="nombre_usuario" name="username" required>
+        </div>
+        <br>
+        <div>
+            <label class="formulario_textos" for="clave">Contraseña:</label>
+            <input  type="password" id="clave" name="password" required>
+        </div>
+        <br>
+        <button class="boton-seleccionar" type="submit">Entrar</button>
+    </form>
+        </form>
+    <p></p>
+    <a class="boton-secundario" href="{% url 'register' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">Crear una cuenta</a>
+    <a class="boton-secundario" href="{% url 'inicio' %}">Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

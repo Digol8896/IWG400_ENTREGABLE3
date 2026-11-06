@@ -1,0 +1,51 @@
+{% extends 'base_accounts.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/registro.css' %}">
+{% endblock %}
+{% block title %}Registro | VGC {% endblock %}
+
+{% block content %}
+<div class="mainbody login-centrado">
+    <div class="formulario_login formulario_registro">
+    <h1>Registro</h1>
+    {% if messages %}
+        {% for mensaje in messages %}
+            <p class="mensaje-error">{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
+
+        <label class="formulario_textos" for="id_username">Nombre de usuario</label>
+        <input type="text" name="username" id="id_username" placeholder="Usuario" required>
+
+        <div class="fila_doble">
+            <div>
+                <label class="formulario_textos" for="id_first_name">Nombre</label>
+                <input type="text" name="first_name" id="id_first_name" placeholder="Nombre" required>
+            </div>
+            <div>
+                <label class="formulario_textos" for="id_last_name">Apellido</label>
+                <input type="text" name="last_name" id="id_last_name" placeholder="Apellido" required>
+            </div>
+        </div>
+
+        <label class="formulario_textos" for="id_email">Correo electrónico</label>
+        <input type="email" name="email" id="id_email" placeholder="email@usm.cl" required>
+
+        <label class="formulario_textos" for="id_password1">Contraseña</label>
+        <input type="password" name="password1" id="id_password1" placeholder="Contraseña" required>
+
+        <label class="formulario_textos" for="id_password2">Confirmar contraseña</label>
+        <input type="password" name="password2" id="id_password2" placeholder="Confirmar contraseña" required>
+
+            <input type="submit" value="Crear cuenta">
+        </form>
+    <p class="texto_centrado">¿Ya tienes una cuenta?</p>
+    <a class="boton-secundario" href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">Iniciar sesión</a>
+    <a class="boton-secundario" href="{% url 'inicio' %}">Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Inicial | Base de Datos</title>
+    <link rel="stylesheet" href="{% static 'css/base_inicio.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo de la página" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a class="textoheader" href="{% url 'prueba_mapa' %}">Mapa</a></li>
+            <li><a class="textoheader" href="{% url 'base_prueba_recorridos' %}">Recorridos</a></li>
+            <li><a class="textoheader" href="{% url 'base_prueba_paradas' %}">Paradas</a></li>
+            <l1><a class ="textoheader" href="{% url 'base_prueba_trips' %}">Trips</a></l1>
+            <li><a class="textoheader" href="{% url 'inicio' %}">Inicio VGC</a></li>
+
+        </ul>
+    </nav>
+
+</body>
