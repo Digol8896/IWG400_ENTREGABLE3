@@ -3,11 +3,13 @@ En este repositorio se encuentra la funcionalidad corazon de nuestro equipo
 
 # Instrucciones de ejecución
 
-1) Importar el repositorio
+1. Importar el repositorio y crear un `venv` en la carpeta raíz del repositorio.
 
-Nota: Para los siguientes pasos se requiere estar dentro del repositorio desde el terminal.
+2. Con el `venv` activo, y desde la carpeta raíz del repositorio, instalar las dependencias:
 
-2) Crear un `venv` de python en la carpeta raiz del repositorio y luego de activarlo escribir el comando `python -m pip install -r requeriments.txt` en caso de estar en MacOS o Linux se usa python3 en vez de python.
+   ```
+   python -m pip install -r requeriments.txt
+   ```
 
 3) Ir al siguiente <a href="https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l">enlace de Onedrive</a> (debe tener una cuenta de microsoft de la UTFSM para hacerlo) y descargar la carpeta `datos`.
 
