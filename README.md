@@ -1,4 +1,4 @@
-﻿# Viajar sin Cortisol | Equipo4 P212 - Los SimpSON
+﻿# Viajar sin Cortisol | Equipo4 P212 - Los SIMPson
 En este repositorio se encuentra la funcionalidad corazon de nuestro equipo
 
 # Instrucciones de ejecución
