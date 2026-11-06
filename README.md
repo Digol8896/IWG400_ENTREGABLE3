@@ -1,7 +1,7 @@
 ﻿# Viajar sin Cortisol | Equipo4 P212 - Los SIMPson
 En este repositorio se encuentra la funcionalidad corazon de nuestro equipo
 
-# Instrucciones de ejecución
+# Instrucciones de instalación
 
 1. Importar el repositorio y crear un `venv` en la carpeta raíz del repositorio.
 
@@ -23,5 +23,13 @@ Este paso es obligatorio ya los comandos del siguiente paso leen los archivos de
 
 <img width="771" height="66" alt="image" src="https://github.com/user-attachments/assets/b545c826-cc81-45f3-8c0d-5165e2e902dd" />
 
-
 Es importante este paso porque el programa y los comandos a ejecutar dependen de estar ubicados correctamente.
+
+6) Ingresar los siguientes comandos en el ortden que aparecen:
+
+   ```
+   python manage.py migrate
+   python manage.py importar_gtfs
+   python manage.py importar_precios
+   ```
+Si algun comando da error verificar que la carpeta datos esta ubicada correctamente. Django debe ser capaz de encontrar todos los CSV que necesita de esa carpeta para poder ejecutar la base de datos
