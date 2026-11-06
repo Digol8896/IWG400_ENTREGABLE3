@@ -34,7 +34,7 @@ Es importante este paso porque el programa y los comandos a ejecutar dependen de
    ```
 Si algún comando da error, verificar que la carpeta datos esta ubicada correctamente. Django debe ser capaz de encontrar todos los CSV que necesita de esa carpeta para poder generar la base de datos.
 
-En caso de que de fallas la importación de la base de datos se dejara disponible una base de datos en la misma carpeta de [OneDrive](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l) del paso 3.
+En caso de que de fallas la importación de la base de datos se dejara disponible una base de datos en la misma carpeta de [OneDrive](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l) del paso 3. Para utilizar esta base debe descargar el archivo db.sqlite3 y dejarlo en el directorio en el que esta manage.py (mismo lugar donde se dejo la carpeta `datos`)
 
 Si este proceso se completa exitosamente podra realizar la ejecución del programa.
 
