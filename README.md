@@ -51,3 +51,5 @@ Pasos para ejecutar la función corazon:
 3) Apretar el boton `Ir a rutas`, tambien puede usarse directamente el url `127.0.0.1:8000/rutas` o `localhost:8000/rutas`.
 
 Una vez realizados estos pasos la función debería ser capaz de ejecutarse correctamente.
+
+Un detalle a considerar en la ejecución es que a veces Django se demora más de lo normal en la ejecución de la funcionalidad corazón, en esos casos suele pasar unas veces y luego vuelve cargar de forma rapida.
