@@ -11,7 +11,7 @@ En este repositorio se encuentra la funcionalidad corazon de nuestro equipo
    python -m pip install -r requeriments.txt
    ```
 
-3. Descargar la carpeta `datos` desde [OneDrive]([https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCLGC253d1sRoCXEe1Y3Ti5AdDWljEni5U6uF_juoHJMnk?e=XVYWjn)). Se necesita una cuenta Microsoft de la UTFSM.
+3. Descargar la carpeta `datos` desde [OneDrive](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCLGC253d1sRoCXEe1Y3Ti5AdDWljEni5U6uF_juoHJMnk?e=XVYWjn). Se necesita una cuenta Microsoft de la UTFSM.
 
 4. Descomprimirla y dejarla **al mismo nivel que `manage.py`**. tal como se dejara en el ejemplo a continuación:
 
@@ -34,7 +34,7 @@ Es importante este paso porque el programa y los comandos a ejecutar dependen de
    ```
 Si algún comando da error, verificar que la carpeta datos esta ubicada correctamente. Django debe ser capaz de encontrar todos los CSV que necesita de esa carpeta para poder generar la base de datos.
 
-En caso de que de fallas la importación de la base de datos se dejara disponible una base de datos en la misma carpeta de [OneDrive]([https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCizsb9CzylT6p-1F7kfZ4NAf0pRcse_JCGvNixzsZhIec?e=9fPL2l](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCLGC253d1sRoCXEe1Y3Ti5AdDWljEni5U6uF_juoHJMnk?e=XVYWjn)) del paso 3. Para utilizar esta base debe descargar el archivo db.sqlite3 y dejarlo en el directorio en el que esta manage.py (mismo lugar donde se dejo la carpeta `datos`)
+En caso de que de fallas la importación de la base de datos se dejara disponible una base de datos en la misma carpeta de [OneDrive](https://usmcl-my.sharepoint.com/:f:/g/personal/dgaldames_usm_cl/IgCLGC253d1sRoCXEe1Y3Ti5AdDWljEni5U6uF_juoHJMnk?e=XVYWjn) del paso 3. Para utilizar esta base debe descargar el archivo db.sqlite3 y dejarlo en el directorio en el que esta manage.py (mismo lugar donde se dejo la carpeta `datos`)
 
 Si este proceso se completa exitosamente podra realizar la ejecución del programa.
 
